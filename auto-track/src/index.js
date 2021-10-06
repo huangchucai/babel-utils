@@ -1,10 +1,10 @@
 const { transformFromAstSync } = require('@babel/core')
 const parser = require('@babel/parser')
-const autoTrackPlugin = require('../plugin/auto-track-plugin.js')
+const autoTrackPlugin = require('./plugin/auto-track-plugin.js')
 const fs = require('fs')
 const path = require('path')
 
-const sourceCode = fs.readFileSync(path.join(__dirname, '../sourceCode.js'), {
+const sourceCode = fs.readFileSync(path.join(__dirname, './sourceCode.js'), {
   encoding: 'utf-8'
 })
 
