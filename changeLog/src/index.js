@@ -5,6 +5,9 @@ const types = require('@babel/types')
 const template = require('@babel/template')
 
 const sourceCode = `
+    function a() {
+      let b = 1
+    }
     console.log(1);
 `;
 const ast = parser.parse(sourceCode, {
@@ -42,6 +45,13 @@ traverse(ast, {
       }
 
     }
+  },
+  FunctionDeclaration(path) {
+    Object.entries(path.scope.bindings).forEach(([id, binding]) => {
+      if(!binding.referenced) {
+        binding.path.remove()
+      }
+    })
   }
 });
 

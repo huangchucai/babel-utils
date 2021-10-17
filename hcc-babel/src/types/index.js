@@ -1,7 +1,8 @@
 const astDefinitionsMap = new Map()
 
 astDefinitionsMap.set('Program', {
-  visitor: ['body']
+  visitor: ['body'],
+  isBlock: true
 })
 astDefinitionsMap.set('VariableDeclaration', {
   visitor: ['declarations']
@@ -18,6 +19,10 @@ astDefinitionsMap.set('FunctionDeclaration', {
 
 astDefinitionsMap.set('BlockStatement', {
   visitor: ['body']
+})
+
+astDefinitionsMap.set('MemberExpression', {
+  visitor: ['object', 'property']
 })
 astDefinitionsMap.set('ReturnStatement', {
   visitor: ['argument']

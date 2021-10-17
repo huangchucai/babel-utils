@@ -1,4 +1,5 @@
 const types = require('../../types')
+const Scope = require('./scope')
 
 class NodePath {
   constructor(node, parent, parentPath, key, listKey) {
@@ -15,8 +16,17 @@ class NodePath {
     })
   }
 
+  get scope() {
+    if(this.__scope) {
+      return this.__scope
+    }
+    const isBlock = this.isBlock()
+    const parentScope = this.parentPath && this.parentPath.scope
+    return this.__scope = isBlock ? new Scope(parentScope, this) : parentScope
+  }
+
   replaceWith(node) {
-    if (this.listKey) {
+    if (this.listKey !== undefined) {
       this.parent[this.key].splice(this.listKey, 1, node)
     } else {
       this.parent[this.key] = node
@@ -24,7 +34,7 @@ class NodePath {
   }
 
   remove() {
-    if (this.listKey) {
+    if (this.listKey !== undefined)  {
       this.parent[this.key].splice(this.listKey, 1)
     } else {
       this.parent[this.key] = null
@@ -55,13 +65,13 @@ class NodePath {
 
     if (definition.visitor) {
       definition.visitor.forEach(key => {
-        const prop = this.node[key]
-        if (Array.isArray(prop)) {
-          prop.forEach((childNode, index) => {
+        const props = this.node[key]
+        if (Array.isArray(props)) {
+          props.forEach((childNode, index) => {
             traverse(childNode, visitors, this.node, this, key ,index)
           })
         } else {
-          traverse(prop, visitors, this.node, this, key)
+          traverse(props, visitors, this.node, this, key)
         }
       })
     }
@@ -73,6 +83,9 @@ class NodePath {
 
   toString() {
     // return generate(this.node).code
+  }
+  isBlock() {
+    return types.visitorKeys.get(this.node.type).isBlock
   }
 }
 
