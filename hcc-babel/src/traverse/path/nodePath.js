@@ -33,9 +33,17 @@ class NodePath {
     }
   }
 
+  updateSiblingKeys() {
+
+  }
+
   remove() {
     if (this.listKey !== undefined)  {
       this.parent[this.key].splice(this.listKey, 1)
+      this.updateSiblingKeys()
+      if(this.parent[this.key].length === 0 ) {
+        this.parentPath.remove()
+      }
     } else {
       this.parent[this.key] = null
     }
