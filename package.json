@@ -19,6 +19,7 @@
     "@babel/traverse": "^7.15.4",
     "@babel/types": "^7.15.6",
     "acorn": "^8.5.0",
+    "commander": "^8.2.0",
     "doctrine": "^3.0.0",
     "fs-extra": "^10.0.0",
     "source-map": "^0.7.3"

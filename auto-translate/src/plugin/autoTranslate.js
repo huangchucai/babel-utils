@@ -3,7 +3,6 @@ const generate = require('@babel/generator').default;
 const fse = require('fs-extra');
 const path = require('path')
 
-
 let intlIndex = 0;
 function nextIntlKey() {
   ++intlIndex;

@@ -45,7 +45,10 @@ class NodePath {
         this.parentPath.remove()
       }
     } else {
-      this.parent[this.key] = null
+      if(this.parent) {
+        this.parent[this.key] = null
+      }
+
     }
   }
 
